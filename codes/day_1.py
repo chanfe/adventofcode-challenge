@@ -21,6 +21,7 @@ def question2(file):
             else:
                 dict[answer] = "hi"
             i += 1
-
+print(question1('../files/test.txt'))
+print(question1('../files/day1_input.txt'))
 print(question2('../files/test.txt'))
 print(question2('../files/day1_input.txt'))
