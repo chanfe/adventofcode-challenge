@@ -9,7 +9,7 @@ def question1(file):
         all_two = 0
         all_three = 0
         for i in content:
-            for j in i: 
+            for j in i:  
                 if j in dic:
                     dic[j] = dic[j] + 1
                 else:
