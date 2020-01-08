@@ -56,5 +56,5 @@ def question2(file):
                 mass = temp
         print (answer)
 
-print(question1('../../files/2019/day1_input.txt'))
-print(question2('../../files/2019/day1_input.txt'))
+print(question1('../files/day1_input.txt'))
+print(question2('../files/day1_input.txt'))
