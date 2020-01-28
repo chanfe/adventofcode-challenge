@@ -62,7 +62,37 @@ def question1(file):
 # ieodomkazucvgmuy is naughty because it has a repeating letter with one between (odo), but no pair that appears twice.
 # How many strings are nice under these new rules?
 
-
+def question2(file):
+    with open(file) as f:
+        content = f.readlines()
+        content = [x.strip() for x in content]
+        
+        pairs = False
+        inbetween = False
+        nice = 0
+        for i in content:
+            dic = {}
+            for j in range(len(i)):
+                try:
+                    if i[j] == i[j+2]:
+                        inbetween = True
+                except:
+                    pass
+                try:
+                    holder = i[j] + i[j+1]
+                    if holder in dic:
+                        if j - dic[holder] > 1:
+                           pairs = True 
+                    else:
+                        dic[holder] = j
+                except:
+                    pass
+                
+            if pairs and inbetween:
+                nice += 1
+            pairs = False
+            inbetween = False
+        return nice 
 
 print(question1('../files/day5_input.txt'))
-# print(question2('../files/day5_input.txt'))
+print(question2('../files/day5_input.txt'))
