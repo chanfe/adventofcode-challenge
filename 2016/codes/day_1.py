@@ -1,24 +1,20 @@
-# --- Day 1: Not Quite Lisp ---
-# Santa was hoping for a white Christmas, but his weather machine's "snow" function is powered by stars, and he's fresh out! To save Christmas, he needs you to collect fifty stars by December 25th.
+# --- Day 1: No Time for a Taxicab ---
+# Santa's sleigh uses a very high-precision clock to guide its movements, and the clock's oscillator is regulated by stars. Unfortunately, the stars have been stolen... by the Easter Bunny. To save Christmas, Santa needs you to retrieve all fifty stars by December 25th.
 
-# Collect stars by helping Santa solve puzzles. Two puzzles will be made available on each day in the Advent calendar; the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
+# Collect stars by solving puzzles. Two puzzles will be made available on each day in the Advent calendar; the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
 
-# Here's an easy puzzle to warm you up.
+# You're airdropped near Easter Bunny Headquarters in a city somewhere. "Near", unfortunately, is as close as you can get - the instructions on the Easter Bunny Recruiting Document the Elves intercepted start here, and nobody had time to work them out further.
 
-# Santa is trying to deliver presents in a large apartment building, but he can't find the right floor - the directions he got are a little confusing. He starts on the ground floor (floor 0) and then follows the instructions one character at a time.
+# The Document indicates that you should start at the given coordinates (where you just landed) and face North. Then, follow the provided sequence: either turn left (L) or right (R) 90 degrees, then walk forward the given number of blocks, ending at a new intersection.
 
-# An opening parenthesis, (, means he should go up one floor, and a closing parenthesis, ), means he should go down one floor.
-
-# The apartment building is very tall, and the basement is very deep; he will never find the top or bottom floors.
+# There's no time to follow such ridiculous instructions on foot, though, so you take a moment and work out the destination. Given that you can only walk on the street grid of the city, how far is the shortest path to the destination?
 
 # For example:
 
-# (()) and ()() both result in floor 0.
-# ((( and (()(()( both result in floor 3.
-# ))((((( also results in floor 3.
-# ()) and ))( both result in floor -1 (the first basement level).
-# ))) and )())()) both result in floor -3.
-# To what floor do the instructions take Santa?
+# Following R2, L3 leaves you 2 blocks East and 3 blocks North, or 5 blocks away.
+# R2, R2, R2 leaves you 2 blocks due South of your starting position, which is 2 blocks away.
+# R5, L5, R5, R3 leaves you 12 blocks away.
+# How many blocks away is Easter Bunny HQ?
 import math
 
 def question1(file):
@@ -26,22 +22,8 @@ def question1(file):
         content = f.readlines()
         content = [x.strip() for x in content]
         for i in content:
-            floor = 0
-            for j in i:
-                if j == '(':
-                    floor += 1
-                else:
-                    floor -= 1
-            return floor
-
-# --- Part Two ---
-# Now, given the same instructions, find the position of the first character that causes him to enter the basement (floor -1). The first character in the instructions has position 1, the second character has position 2, and so on.
-
-# For example:
-
-# ) causes him to enter the basement at character position 1.
-# ()()) causes him to enter the basement at character position 5.
-# What is the position of the character that causes Santa to first enter the basement?
+            
+            return floor 
 
 def question2(file):
     with open(file) as f:
@@ -49,14 +31,7 @@ def question2(file):
         content = [x.strip() for x in content]
         for i in content:
             floor = 0
-            for j in range(len(i)):
-                if i[j] == '(':
-                    floor += 1
-                else:
-                    floor -= 1
-                if floor == -1:
-                    return j + 1
-            return floor
+
 
 print(question1('../files/day1_input.txt'))
-print(question2('../files/day1_input.txt'))
+# print(question2('../files/day1_input.txt'))
