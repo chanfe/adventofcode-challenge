@@ -47,7 +47,6 @@ def question1(file):
                     for j in range(x1,x2):
                         grid[i][j] = 1 - grid[i][j]
         total = 0
-        print(grid)
         for i in range(1000):
             for j in range(1000):
                 if grid[i][j] == 1:
@@ -92,23 +91,26 @@ def question2(file):
             if key_word.group() == 'on':
                 for i in range(y1,y2):
                     for j in range(x1,x2):
-                        grid[i][j] = 1
+                        grid[i][j] += 1
             elif key_word.group() == 'off':
                 for i in range(y1,y2):
                     for j in range(x1,x2):
-                        grid[i][j] = 0
+                        temp = grid[i][j] - 1
+                        if temp < 0:
+                            grid[i][j] = 0
+                        else:
+                            grid[i][j] = temp
+                        
             else:
                 for i in range(y1,y2):
                     for j in range(x1,x2):
-                        grid[i][j] = 1 - grid[i][j]
+                        grid[i][j] += 2
         total = 0
-        print(grid)
         for i in range(1000):
             for j in range(1000):
-                if grid[i][j] == 1:
-                    total += 1
+                total += grid[i][j]
         return total
 
 
 print(question1('../files/day6_input.txt'))
-# print(question2('../files/day6_input.txt'))
+print(question2('../files/day6_input.txt'))
