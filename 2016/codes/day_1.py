@@ -21,17 +21,100 @@ def question1(file):
     with open(file) as f:
         content = f.readlines()
         content = [x.strip() for x in content]
-        for i in content:
+        splited_content = content[0].split(", ")
+        direction = ['N','E','S','W']
+        cur_dir = 0
+        x = 0
+        y = 0
+
+        for i in splited_content:
+            if i[0] == 'R':
+                cur_dir = (cur_dir + 1) % 4
+            else:
+                if cur_dir - 1 < 0:
+                    cur_dir = len(direction) - 1
+                else:
+                    cur_dir = (cur_dir - 1)
             
-            return floor 
+
+            steps = int(i[1:])
+
+            if direction[cur_dir] == 'N':
+                x+=steps
+            elif direction[cur_dir] == 'E':
+                y+=steps
+            elif direction[cur_dir] == 'S':
+                x-=steps
+            else:
+                y-=steps        
+
+        return abs(x) + abs(y)
+# --- Part Two ---
+# Then, you notice the instructions continue on the back of the Recruiting Document. Easter Bunny HQ is actually at the first location you visit twice.
+
+# For example, if your instructions are R8, R4, R4, R8, the first location you visit twice is 4 blocks away, due East.
+
+# How many blocks away is the first location you visit twice?
+
 
 def question2(file):
     with open(file) as f:
         content = f.readlines()
         content = [x.strip() for x in content]
-        for i in content:
-            floor = 0
+        splited_content = content[0].split(", ")
+        direction = ['N','E','S','W']
+        cur_dir = 0
+        x = 0
+        y = 0
+        dict_used_path = {}
+        for i in splited_content:
+            if i[0] == 'R':
+                cur_dir = (cur_dir + 1) % 4
+            else:
+                if cur_dir - 1 < 0:
+                    cur_dir = len(direction) - 1
+                else:
+                    cur_dir = (cur_dir - 1)
+            
 
+            steps = int(i[1:])
+
+            if direction[cur_dir] == 'N':
+                for i in range(steps):
+                    x+=1
+                    string_pos = str(x)+','+str(y)
+                    if string_pos in dict_used_path:
+                        return abs(x) + abs(y)
+                    else:
+                        dict_used_path[string_pos] = 1
+            elif direction[cur_dir] == 'E':
+                for i in range(steps):
+                    y+=1
+                    string_pos = str(x)+','+str(y)
+                    if string_pos in dict_used_path:
+                        return abs(x) + abs(y)
+                    else:
+                        dict_used_path[string_pos] = 1
+            elif direction[cur_dir] == 'S':
+                for i in range(steps):
+                    x-=1
+                    string_pos = str(x)+','+str(y)
+                    if string_pos in dict_used_path:
+                        return abs(x) + abs(y)
+                    else:
+                        dict_used_path[string_pos] = 1
+            else:
+                for i in range(steps):
+                    y-=1
+                    string_pos = str(x)+','+str(y)
+                    if string_pos in dict_used_path:
+                        return abs(x) + abs(y)
+                    else:
+                        dict_used_path[string_pos] = 1        
+
+        return abs(x) + abs(y)
+
+# print(question2('../files/test.txt'))
 
 print(question1('../files/day1_input.txt'))
-# print(question2('../files/day1_input.txt'))
+print(question2('../files/day1_input.txt'))
