@@ -43,8 +43,31 @@ def question1(file):
 # 202 402 602
 # 203 403 603
 # In your puzzle input, and instead reading by columns, how many of the listed triangles are possible?
+def question2(file):
+    with open(file) as f:
+        content = f.readlines()
+        content = [x.strip() for x in content]
+        answer = 0
+        part1 = []
+        part2 = []
+        counter = 0
+        for i in content:
+            splited = i.split()
+            if counter % 3 == 2:
+                if _valid_triangle(int(part1[0]), int(part2[0]), int(splited[0])):
+                    answer += 1
+                if _valid_triangle(int(part1[1]), int(part2[1]), int(splited[1])):
+                    answer += 1
+                if _valid_triangle(int(part1[2]), int(part2[2]), int(splited[2])):
+                    answer += 1
+            elif counter % 3 == 0:
+                part1 = splited
+            elif counter % 3 == 1:
+                part2 = splited
+            counter += 1
+        return answer
 
 # print(question1('../files/test.txt'))
 # print(question2('../files/test.txt'))
-# print(question1('../files/day3_input.txt'))
-# print(question2('../files/day3_input.txt'))
+print(question1('../files/day3_input.txt'))
+print(question2('../files/day3_input.txt'))
