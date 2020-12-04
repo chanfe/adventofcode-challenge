@@ -43,6 +43,7 @@
 # Count the number of valid passports - those that have all required fields. Treat cid as optional. In your batch file, how many passports are valid?
 
 import math
+import re
 
 def question1(file):
     with open(file) as f:
@@ -82,7 +83,173 @@ def vaild(arr):
             return False
     return True
 
+
+# --- Part Two ---
+# The line is moving more quickly now, but you overhear airport security talking about how passports with invalid data are getting through. Better add some data validation, quick!
+
+# You can continue to ignore the cid field, but each other field has strict rules about what values are valid for automatic validation:
+
+# byr (Birth Year) - four digits; at least 1920 and at most 2002.
+# iyr (Issue Year) - four digits; at least 2010 and at most 2020.
+# eyr (Expiration Year) - four digits; at least 2020 and at most 2030.
+# hgt (Height) - a number followed by either cm or in:
+# If cm, the number must be at least 150 and at most 193.
+# If in, the number must be at least 59 and at most 76.
+# hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
+# ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
+# pid (Passport ID) - a nine-digit number, including leading zeroes.
+# cid (Country ID) - ignored, missing or not.
+# Your job is to count the passports where all required fields are both present and valid according to the above rules. Here are some example values:
+
+# byr valid:   2002
+# byr invalid: 2003
+
+# hgt valid:   60in
+# hgt valid:   190cm
+# hgt invalid: 190in
+# hgt invalid: 190
+
+# hcl valid:   #123abc
+# hcl invalid: #123abz
+# hcl invalid: 123abc
+
+# ecl valid:   brn
+# ecl invalid: wat
+
+# pid valid:   000000001
+# pid invalid: 0123456789
+# Here are some invalid passports:
+
+# eyr:1972 cid:100
+# hcl:#18171d ecl:amb hgt:170 pid:186cm iyr:2018 byr:1926
+
+# iyr:2019
+# hcl:#602927 eyr:1967 hgt:170cm
+# ecl:grn pid:012533040 byr:1946
+
+# hcl:dab227 iyr:2012
+# ecl:brn hgt:182cm pid:021572410 eyr:2020 byr:1992 cid:277
+
+# hgt:59cm ecl:zzz
+# eyr:2038 hcl:74454a iyr:2023
+# pid:3556412378 byr:2007
+# Here are some valid passports:
+
+# pid:087499704 hgt:74in ecl:grn iyr:2012 eyr:2030 byr:1980
+# hcl:#623a2f
+
+# eyr:2029 ecl:blu cid:129 byr:1989
+# iyr:2014 pid:896056539 hcl:#a97842 hgt:165cm
+
+# hcl:#888785
+# hgt:164cm byr:2001 iyr:2015 cid:88
+# pid:545766238 ecl:hzl
+# eyr:2022
+
+# iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719
+# Count the number of valid passports - those that have all required fields and valid values. Continue to treat cid as optional. In your batch file, how many passports are valid?
+
+def question2(file):
+    with open(file) as f:
+        content = f.readlines()
+        content = [x.strip() for x in content]
+        check = [0,0,0,0,0,0,0,1]
+        field = {
+            'byr':0,
+            'iyr':1,
+            'eyr':2,
+            'hgt':3,
+            'hcl':4,
+            'ecl':5,
+            'pid':6,
+            'cid':7
+        }
+        answer = 0
+        for i in range(len(content)):
+
+            splitted = content[i].split()
+            for j in splitted:
+                key, value = j.split(':')
+                if value_vaild(key, value):
+                    check[field[key]] = 1
+
+            if content[i] == '' or i == len(content)-1:
+                if vaild(check):
+                    answer += 1
+                check = [0,0,0,0,0,0,0,1]
+                continue
+            
+
+        return answer
+
+def value_vaild(key,value):
+    try:
+        if key == 'byr':
+            value = int(value)
+            if value >= 1920 and value <= 2002:
+                return True
+            else:
+                return False
+
+        if key == 'iyr':
+            value = int(value)
+            if value >= 2010 and value <= 2020:
+                return True
+            else:
+                return False
+
+        if key == 'eyr':
+            value = int(value)
+            if value >= 2020 and value <= 2030:
+                return True
+            else:
+                return False
+
+        if key == 'hgt':
+            if value[-2:] == "in":
+                a = int(value[:-2])
+                if a <= 76 and a >= 59:
+                    return True
+            if value[-2:] == "cm":
+                a = int(value[:-2])
+                if a <= 193 and a >= 150:
+                    return True
+            return False
+
+        if key == 'hcl':
+            x = re.findall('#[0-9a-f]{6}', value)
+            if x:
+                return True
+            else:
+                return False
+
+        if key == 'ecl':
+            x = re.findall('(amb|blu|brn|gry|grn|hzl|oth)', value)
+            if x:
+                return True
+            else:
+                return False
+
+        if key == 'pid':
+            if len(value) != 9:
+                return False
+            x = re.findall("\d{9}", value)
+            if x:
+                return True
+            else:
+                return False
+
+        if key == 'cid':
+            return True
+    except:
+        return False
+
+
+# key = 'pid'
+# value = "0000000002"
+# print(value_vaild(key,value))
+
 # print(question1('../files/test.txt'))
 # print(question2('../files/test.txt'))
 print(question1('../files/day4_input.txt'))
-# print(question2('../files/day4_input.txt'))
+print(question2('../files/day4_input.txt'))
