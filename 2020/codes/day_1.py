@@ -56,5 +56,5 @@ def question2(file):
                         return int(content[i]) * int(content[j]) * int(content[k])
         return 0
 
-# print(question1('../files/day1_input.txt'))
+print(question1('../files/day1_input.txt'))
 print(question2('../files/day1_input.txt'))

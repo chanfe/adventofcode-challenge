@@ -84,5 +84,5 @@ def question2(file):
 
 # print(question1('../files/test.txt'))
 # print(question2('../files/test.txt'))
-# print(question1('../files/day2_input.txt'))
+print(question1('../files/day2_input.txt'))
 print(question2('../files/day2_input.txt'))
