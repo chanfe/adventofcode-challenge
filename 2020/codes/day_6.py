@@ -61,9 +61,84 @@ def question1(file):
         return answer
             
 
+# --- Part Two ---
+# As you finish the last group's customs declaration, you notice that you misread one word in the instructions:
 
+# You don't need to identify the questions to which anyone answered "yes"; you need to identify the questions to which everyone answered "yes"!
+
+# Using the same example as above:
+
+# abc
+
+# a
+# b
+# c
+
+# ab
+# ac
+
+# a
+# a
+# a
+# a
+
+# b
+# This list represents answers from five groups:
+
+# In the first group, everyone (all 1 person) answered "yes" to 3 questions: a, b, and c.
+# In the second group, there is no question to which everyone answered "yes".
+# In the third group, everyone answered yes to only 1 question, a. Since some people did not answer "yes" to b or c, they don't count.
+# In the fourth group, everyone answered yes to only 1 question, a.
+# In the fifth group, everyone (all 1 person) answered "yes" to 1 question, b.
+# In this example, the sum of these counts is 3 + 0 + 1 + 1 + 1 = 6.
+
+# For each group, count the number of questions to which everyone answered "yes". What is the sum of those counts?
+
+def question2(file):
+    with open(file) as f:
+        content = f.readlines()
+        content = [x.strip() for x in content]
+        dict_letters = {}
+        answer = 0
+        num_people = 0
+        max_yes = 0
+        for i in content:
+            if i == '':
+                keys = dict_letters.keys()
+
+                for k in keys:
+                    if dict_letters[k] > max_yes:
+                        max_yes = dict_letters[k]
+                
+                if max_yes == num_people:
+                    for k in keys:
+                        if dict_letters[k] == max_yes:
+                            answer += 1
+
+                dict_letters = {}
+                num_people = 0
+                max_yes = 0
+                continue
+            else:
+                num_people += 1
+                for j in i:
+                    if j in dict_letters:
+                        dict_letters[j] = dict_letters[j] + 1
+                    else:
+                        dict_letters[j] = 1
+
+        keys = dict_letters.keys()
+        for k in keys:
+            if dict_letters[k] > max_yes:
+                max_yes = dict_letters[k]
+
+        if max_yes == num_people:
+            for k in keys:
+                if dict_letters[k] == max_yes:
+                    answer += 1
+        return answer
 
 # print(question1('../files/test.txt'))
 # print(question2('../files/test.txt'))
 print(question1('../files/day6_input.txt'))
-# print(question2('../files/day6_input.txt'))
+print(question2('../files/day6_input.txt'))
