@@ -86,7 +86,6 @@ def question2(file):
         content = [x.strip() for x in content]
         row = 128
         col = 8
-        answer = 0
         find_dic = {}
         for i in range(95,838):
             find_dic[i] = 0
