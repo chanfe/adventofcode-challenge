@@ -294,6 +294,23 @@ def question2(file):
         else:
             prev_2d_arr = deepcopy(cur_2d_arr)
 
+        print("second")
+
+        cur_2d_arr = []
+        
+        for y in range(len(content)):
+            cur_2d_arr.append([])
+            for x in range(len(content[y])):
+                ck = check2(prev_2d_arr, x, y, x_max, y_max)
+                cur_2d_arr[y].append(ck)
+                if ck == '#':
+                    oc += 1
+        print(cur_2d_arr)
+        if prev_2d_arr == cur_2d_arr:
+            return oc
+        else:
+            prev_2d_arr = deepcopy(cur_2d_arr)
+
 def check2(arr, x, y, x_max, y_max):
     visable_counter = 0
     if arr[y][x] == '.':
@@ -303,28 +320,33 @@ def check2(arr, x, y, x_max, y_max):
         while temp_y < y_max:
             if arr[temp_y][x] == '#':
                 visable_counter += 1
+                break
             temp_y += 1
 
         temp_y = y - 1
         while temp_y >= 0:
             if arr[temp_y][x] == '#':
                 visable_counter += 1
+                break
             temp_y -= 1
         temp_x = x + 1
         while temp_x < x_max:
             if arr[y][temp_x] == '#':
                 visable_counter += 1
+                break
             temp_x += 1
         temp_x = x - 1
         while temp_x >= 0:
             if arr[y][temp_x] == '#':
                 visable_counter += 1
+                break
             temp_x -= 1
         temp_y = y - 1
         temp_x = x - 1
         while temp_y >= 0 and temp_x >= 0:
             if arr[temp_y][temp_x] == '#':
                 visable_counter += 1
+                break
             temp_y -= 1
             temp_x -= 1
         temp_y = y + 1
@@ -332,6 +354,7 @@ def check2(arr, x, y, x_max, y_max):
         while temp_y < y_max and temp_x < x_max:
             if arr[temp_y][temp_x] == '#':
                 visable_counter += 1
+                break
             temp_y += 1
             temp_x += 1
         temp_y = y - 1
@@ -339,6 +362,7 @@ def check2(arr, x, y, x_max, y_max):
         while temp_y >= 0 and temp_x < x_max:
             if arr[temp_y][temp_x] == '#':
                 visable_counter += 1
+                break
             temp_y -= 1
             temp_x += 1
         temp_y = y + 1
@@ -346,6 +370,7 @@ def check2(arr, x, y, x_max, y_max):
         while temp_y < y_max and temp_x >= 0:
             if arr[temp_y][temp_x] == '#':
                 visable_counter += 1
+                break
             temp_y += 1
             temp_x -= 1
 
